@@ -6,6 +6,14 @@
 
   function expired(){ return new Date() >= EXPIRES_AT; }
   function addBar(){
+    if(!document.getElementById('tot-preview-watermark')){
+      const mark=document.createElement('img');
+      mark.id='tot-preview-watermark';
+      mark.src='assets/tots-watermark.png';
+      mark.alt='';
+      mark.setAttribute('aria-hidden','true');
+      document.body.appendChild(mark);
+    }
     if(document.getElementById('tot-preview-bar')) return;
     const bar=document.createElement('div');
     bar.id='tot-preview-bar';
