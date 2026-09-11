@@ -24,7 +24,7 @@
     const wrap=document.createElement('div');
     wrap.className='tot-gate';
     wrap.innerHTML=`<div class="tot-gate__card">
-      <img class="tot-gate__logo" src="assets/logo.jpg" alt="DM Executive Travel">
+      <img class="tot-gate__logo" src="assets/logo.svg" alt="DM Executive Travel">
       <p class="tot-gate__eyebrow">Private website concept</p>
       <h1>${isExpired?'This preview has now expired.':'DM Executive Travel'}</h1>
       <p class="tot-gate__copy">${isExpired?'This private concept is no longer available. Please contact The Organised Types if you would like to continue with the project.':'Prepared exclusively for DM Executive Travel by The Organised Types. Enter the access code provided to view the concept.'}</p>
