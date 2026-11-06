@@ -1,0 +1,48 @@
+# Deploy DM Executive Travel website to GitHub Pages
+name: Deploy DM Executive Travel
+
+on:
+  push:
+    branches: ["main"]
+
+  workflow_dispatch:
+
+# Permissions required for GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Prevent overlapping deployments
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy Website
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # Configure GitHub Pages
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      # Upload website files from dm exec folder
+      - name: Upload Website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dm exec'
+
+      # Deploy website
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
