@@ -428,7 +428,7 @@
           <form
             class="contact-form"
             id="journeyEnquiryForm"
-            action="https://formsubmit.co/ajax/info@dmexecutivetravel.com"
+            action="https://formsubmit.co/info@dmexecutivetravel.com"
             method="post"
           >
 
@@ -738,40 +738,7 @@
 
 
   <script src="assets/site.js"></script>
-  <script>
-    (() => {
-      const form = document.getElementById('journeyEnquiryForm');
-      const status = document.getElementById('enquiryStatus');
-      if (!form || !status) return;
 
-      form.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        if (!form.reportValidity()) return;
-        const button = form.querySelector('button[type="submit"]');
-        button.disabled = true;
-        button.textContent = 'Sending…';
-        status.textContent = '';
-        try {
-          const response = await fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-            headers: { 'Accept': 'application/json' }
-          });
-          const result = await response.json();
-          if (!response.ok || result.success === false || result.success === 'false') {
-            throw new Error(result.message || 'Submission was not accepted');
-          }
-          form.reset();
-          status.textContent = 'Thank you! Your enquiry has been sent. We’ll be in touch soon.';
-        } catch (error) {
-          status.textContent = 'Form error: ' + error.message; console.error('FormSubmit error:', error);
-        } finally {
-          button.disabled = false;
-          button.textContent = 'Send enquiry';
-        }
-      });
-    })();
-  </script>
 
 </body>
 </html>
