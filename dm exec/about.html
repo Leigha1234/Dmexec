@@ -427,9 +427,14 @@
 
           <form
             class="contact-form"
-            action="#"
+            id="journeyEnquiryForm"
+            action="https://formsubmit.co/ajax/info@dmexecutivetravel.com"
             method="post"
           >
+
+            <input type="hidden" name="_subject" value="New DM Executive Travel enquiry">
+            <input type="hidden" name="_template" value="table">
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
 
             <div class="form-grid">
 
@@ -443,6 +448,8 @@
                 <input
                   type="text"
                   name="name"
+                  required
+                  autocomplete="name"
                   placeholder="Your name"
                 >
 
@@ -458,6 +465,8 @@
                 <input
                   type="email"
                   name="email"
+                  required
+                  autocomplete="email"
                   placeholder="you@example.com"
                 >
 
@@ -549,6 +558,7 @@
 
               <textarea
                 name="message"
+                required
                 rows="5"
                 placeholder="Tell us about the sort of trip you’d like, the places you want to visit and anything you’d especially like to include."
               ></textarea>
@@ -562,6 +572,7 @@
             >
               Send enquiry
             </button>
+            <p id="enquiryStatus" role="status" aria-live="polite" style="margin-top:16px;"></p>
 
           </form>
 
@@ -727,6 +738,40 @@
 
 
   <script src="assets/site.js"></script>
+  <script>
+    (() => {
+      const form = document.getElementById('journeyEnquiryForm');
+      const status = document.getElementById('enquiryStatus');
+      if (!form || !status) return;
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        const button = form.querySelector('button[type="submit"]');
+        button.disabled = true;
+        button.textContent = 'Sending…';
+        status.textContent = '';
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+            headers: { 'Accept': 'application/json' }
+          });
+          const result = await response.json();
+          if (!response.ok || result.success === false || result.success === 'false') {
+            throw new Error('Submission was not accepted');
+          }
+          form.reset();
+          status.textContent = 'Thank you! Your enquiry has been sent. We’ll be in touch soon.';
+        } catch (error) {
+          status.textContent = 'Sorry, we couldn’t send your enquiry. Please email info@dmexecutivetravel.com directly.';
+        } finally {
+          button.disabled = false;
+          button.textContent = 'Send enquiry';
+        }
+      });
+    })();
+  </script>
 
 </body>
 </html>
