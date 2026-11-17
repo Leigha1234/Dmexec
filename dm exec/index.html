@@ -123,6 +123,12 @@
       height: 68px;
     }
   }
+  /* Keep the decorative scroll cue clear of hero buttons on mobile. */
+  @media (max-width: 700px) {
+    .hero .scroll-cue {
+      display: none !important;
+    }
+  }
 </style>
 
 </head>
