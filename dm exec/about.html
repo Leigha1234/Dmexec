@@ -759,12 +759,12 @@
           });
           const result = await response.json();
           if (!response.ok || result.success === false || result.success === 'false') {
-            throw new Error('Submission was not accepted');
+            throw new Error(result.message || 'Submission was not accepted');
           }
           form.reset();
           status.textContent = 'Thank you! Your enquiry has been sent. We’ll be in touch soon.';
         } catch (error) {
-          status.textContent = 'Sorry, we couldn’t send your enquiry. Please email info@dmexecutivetravel.com directly.';
+          status.textContent = 'Form error: ' + error.message; console.error('FormSubmit error:', error);
         } finally {
           button.disabled = false;
           button.textContent = 'Send enquiry';
